@@ -1,0 +1,86 @@
+@SpringBootApplication = @ComponentScan + @SpringBootConfiguration + @AutoConfiguration
+
+diff between @Controller and @RestController
+@Controller - A class annotated with @Controller is used to denote
+web-application controller class (of MVC pattern) of spring-boot web application.
+A method coded class annotated with @Controller returns a string which corresponds to the 
+view (view page like jsp) name that container should used to display model data.
+
+@RestController - A class annotated with @RestController denotes rest-web-service
+of spring-boot-rest-application.A method of such a class return a data which is shown/displayed
+in response body of response message displayed as is in the browser.
+If method returns an object instead of primitive type or string
+then object is converted into json as Response body and returned in response message
+by spring boot container.
+@RestController = @Controller + @ResponseBody annotation.
+
+
+object to json converters:-
+jackson dependancy part of spring-boot-starter-web
+
+in application.properties set 
+logging.level.org.springframework=debug
+
+default logging level is info but for org.springframework package we would
+set logging level to debug
+and search for word - jackson on console.
+
+in pom.xml cntrl-click on spring-boot-starter-web dependency and open its underlying pom
+and locate spring-boot-starter-json, cntrl click that too to open its dependancy
+and locate all jackson related classes in it.
+
+jacksonObjectMapper - is used to map javabean to json object and vice-a-versa
+
+
+@PathVariable - path parameter and value
+used to pass parameter and value as part of url.
+url - /user/namrata/todo/1
+
+
+Logging levels-
+trace
+debug
+info
+warning
+error
+logging.level.org.springframework=debug
+
+profiles- configure properties (database,ports,services based on diff environments)
+4 environments - dev,test,stage,prod
+
+application.properties
+logging.level.org.springframework=debug
+spring.profiles.active=prod
+
+application-dev.properties
+logging.level.org.springframework=trace
+
+application-prod.properties
+logging.level.org.springframework=info
+
+final profile properties = merging application.properties + active profile properties
+so common properties get overriden
+hence for prod profile it would log at info level
+logging.level.org.springframework=info
+
+MVC Design Pattern:-
+
+ 
+
+model - plain java bean/pojo class that stores that like Employee, Account, Book etc
+         --to hold member data along with member functions 
+         
+view - jsp / html pages - take i/p or show output
+
+ 
+
+controller - JEE API- servlet class, Spring framework (any class annotated with @Controller)
+    
+        Front Controller - responsible for deciding flow of your application
+              -- request mapping - map to which controller? which method? 
+              
+        Business Controllers like EmpController, LoginController etc
+             -- business methods related that controller
+                   -- modify data of model classes in some wat
+            
+        controller will select the view to show final model data  
